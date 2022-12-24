@@ -44,6 +44,7 @@ var_dump($range[2]); // 5
 try {
     $range[3];
 } catch(OutOfRangeException $e) {
+    echo "cannot get value from index out of range\n";
 }
 
 var_dump($range[-1]); // 5
@@ -74,6 +75,63 @@ foreach($range as $value) {
     echo "{$value} ";
 }
 // out: 1.1 3.2 5.3
+```
+
+#### Exponential
+
+```php
+use Smoren\Sequence\Structs\IntExponential;
+use Smoren\Sequence\Structs\FloatExponential;
+
+/* Simple int exponential sequence */
+$sequence = new IntRange(1, 4, 2); // (from, size, step)
+var_dump($sequence->isInfinite()); // false
+
+foreach($sequence as $value) {
+    echo "{$value} ";
+}
+// out: 1 2 4 8
+
+var_dump($sequence[0]); // 1
+var_dump($sequence[1]); // 2
+var_dump($sequence[2]); // 4
+var_dump($sequence[3]); // 8
+
+try {
+    $sequence[4];
+} catch(OutOfRangeException $e) {
+    echo "cannot get value from index out of range\n";
+}
+
+var_dump($sequence[-1]); // 8
+var_dump($sequence[-2]); // 4
+var_dump($sequence[-3]); // 2
+var_dump($sequence[-4]); // 1
+
+try {
+    $sequence[-5];
+} catch(OutOfRangeException $e) {
+    echo "cannot get value from index out of range\n";
+}
+
+/* Infinite int exponential sequence */
+$sequence = new IntExponential(1, null, 2);
+var_dump($sequence->isInfinite()); // true
+
+foreach($sequence as $i => $value) {
+    echo "{$value} ";
+    if($i > 100) break;
+}
+// out: 1 2 4 8 16 32 64...
+
+/* Infinite float exponential sequence */
+$sequence = new FloatRange(0.5, null, 2);
+var_dump($sequence->isInfinite()); // true
+
+foreach($sequence as $value) {
+    echo "{$value} ";
+}
+// out: 0.5 0.25 0.125...
 ```
 
 #### IndexedArray

@@ -24,7 +24,7 @@ class IndexedArray implements IndexedArrayInterface
      */
     public function __construct(array $source = [])
     {
-        $this->source = $source;
+        $this->source = array_values($source);
     }
 
     /**
