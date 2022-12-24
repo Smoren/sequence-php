@@ -25,12 +25,22 @@ composer test
 #### Range-based for (python-like)
 
 ```php
-use Smoren\Sequence\Structs\IntRange;
+use function Smoren\Sequence\Functions\xrange;
 
-foreach(new IntRange(0, 5) as $i) {
+foreach(xrange(5) as $i) {
     echo "{$i} ";
 }
 // out: 0 1 2 3 4
+
+foreach(xrange(1, 5) as $i) {
+    echo "{$i} ";
+}
+// out: 1 2 3 4 5
+
+foreach(xrange(1, 5, 2) as $i) {
+    echo "{$i} ";
+}
+// out: 1 3 5 7 9
 ```
 
 #### Range

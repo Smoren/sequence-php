@@ -23,7 +23,8 @@
     "psr-4": {
       "Smoren\\Sequence\\": "src",
       "Smoren\\Sequence\\Tests\\Unit\\": "tests/unit"
-    }
+    },
+    "files": ["src/functions.php"]
   },
   "config": {
     "fxp-asset": {
