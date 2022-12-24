@@ -22,6 +22,17 @@ composer test
 
 ### Usage
 
+#### Range-based for (python-like)
+
+```php
+use Smoren\Sequence\Structs\IntRange;
+
+foreach(new IntRange(0, 5) as $i) {
+    echo "{$i} ";
+}
+// out: 0 1 2 3 4
+```
+
 #### Range
 
 ```php
