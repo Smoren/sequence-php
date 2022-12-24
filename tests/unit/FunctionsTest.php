@@ -23,5 +23,20 @@ class FunctionsTest extends Unit
 
         $range = xrange(2, 3, 3);
         $this->assertEquals([2, 5, 8], iterator_to_array($range));
+
+        $range = xrange(0);
+        $this->assertEquals([], iterator_to_array($range));
+
+        $range = xrange(0, 0);
+        $this->assertEquals([], iterator_to_array($range));
+
+        $range = xrange(0, 0, 0);
+        $this->assertEquals([], iterator_to_array($range));
+
+        $range = xrange(0, -1);
+        $this->assertEquals([], iterator_to_array($range));
+
+        $range = xrange(0, -1, 0);
+        $this->assertEquals([], iterator_to_array($range));
     }
 }
