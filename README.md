@@ -84,7 +84,7 @@ use Smoren\Sequence\Structs\IntExponential;
 use Smoren\Sequence\Structs\FloatExponential;
 
 /* Simple int exponential sequence */
-$sequence = new IntRange(1, 4, 2); // (from, size, step)
+$sequence = new IntExponential(1, 4, 2); // (from, size, step)
 var_dump($sequence->isInfinite()); // false
 
 foreach($sequence as $value) {
