@@ -20,7 +20,7 @@ abstract class IntSequence implements SequenceInterface
      */
     protected int $start;
     /**
-     * @var int|null
+     * @var int<0, max>|null
      */
     protected ?int $size;
     /**
@@ -30,7 +30,7 @@ abstract class IntSequence implements SequenceInterface
 
     /**
      * @param int $start
-     * @param int|null $size
+     * @param int<0, max>|null $size
      * @param int $step
      */
     public function __construct(int $start, ?int $size, int $step = 1)

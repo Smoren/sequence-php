@@ -6,7 +6,7 @@ use Smoren\Sequence\Structs\IntRange;
 
 /**
  * @param int $start
- * @param int|null $size
+ * @param int<0, max>|null $size
  * @param int $step
  * @return IntRange
  */

@@ -20,7 +20,7 @@ abstract class FloatSequence implements SequenceInterface
      */
     protected float $start;
     /**
-     * @var int|null
+     * @var int<0, max>|null
      */
     protected ?int $size;
     /**
@@ -30,7 +30,7 @@ abstract class FloatSequence implements SequenceInterface
 
     /**
      * @param float $start
-     * @param int|null $size
+     * @param int<0, max>|null $size
      * @param float $step
      */
     public function __construct(float $start, ?int $size, float $step = 1)
