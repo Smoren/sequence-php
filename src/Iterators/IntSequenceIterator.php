@@ -13,6 +13,9 @@ use Smoren\Sequence\Traits\SequenceIteratorTrait;
  */
 class IntSequenceIterator implements SequenceIteratorInterface
 {
+    /**
+     * @use SequenceIteratorTrait<int>
+     */
     use SequenceIteratorTrait;
 
     /**

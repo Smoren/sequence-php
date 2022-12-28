@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Smoren\Sequence\Traits;
 
-use ArrayAccess;
-use Countable;
+use Smoren\Sequence\Interfaces\SequenceInterface;
 use Smoren\Sequence\Interfaces\SequenceIteratorInterface;
 
 /**
- * @implements SequenceIteratorInterface<mixed>
- * @property ArrayAccess<int, int|float>|Countable $sequence
+ * @template T
+ * @implements SequenceIteratorInterface<T>
+ * @property SequenceInterface<T> $sequence
  * @property int $currentIndex
  */
 trait SequenceIteratorTrait

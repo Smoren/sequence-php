@@ -13,6 +13,9 @@ use Smoren\Sequence\Traits\SequenceIteratorTrait;
  */
 class FloatSequenceIterator implements SequenceIteratorInterface
 {
+    /**
+     * @use SequenceIteratorTrait<float>
+     */
     use SequenceIteratorTrait;
 
     /**
