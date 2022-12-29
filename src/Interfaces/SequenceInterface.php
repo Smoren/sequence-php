@@ -24,7 +24,7 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
 
     /**
      * @param int $index
-     * @return mixed
+     * @return T
      */
     public function getValueByIndex(int $index);
 
@@ -37,16 +37,16 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
      * @param T $previousValue
      * @return T
      */
-    //public function getNextValue($previousValue);
+    public function getNextValue($previousValue);
 
     /**
-     * @param int|mixed $offset
+     * @param int $offset
      * @return bool
      */
     public function offsetExists($offset): bool;
 
     /**
-     * @param int|mixed $offset
+     * @param int $offset
      * @return T
      * @throws OutOfRangeException
      */
@@ -54,19 +54,17 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
     public function offsetGet($offset);
 
     /**
-     * @param int|null|mixed $offset
+     * @param int|null $offset
      * @param T $value
      * @return void
      * @throws ReadOnlyException
-     * @throws OutOfRangeException
      */
     public function offsetSet($offset, $value): void;
 
     /**
-     * @param int|mixed $offset
+     * @param int $offset
      * @return void
      * @throws ReadOnlyException
-     * @throws OutOfRangeException
      */
     public function offsetUnset($offset): void;
 

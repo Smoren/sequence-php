@@ -46,11 +46,11 @@ foreach(xrange(1, 5, 2) as $i) {
 #### Range
 
 ```php
-use Smoren\Sequence\Structs\IntRange;
-use Smoren\Sequence\Structs\FloatRange;
+use Smoren\Sequence\Structs\Range;
+use Smoren\Sequence\Exceptions\OutOfRangeException;
 
 /* Simple int range */
-$range = new IntRange(1, 3, 2); // (from, size, step)
+$range = new Range(1, 3, 2); // (from, size, step)
 var_dump($range->isInfinite()); // false
 
 foreach($range as $value) {
@@ -79,7 +79,7 @@ try {
 }
 
 /* Infinite int range */
-$range = new IntRange(1, null, 2);
+$range = new Range(1, null, 2);
 var_dump($range->isInfinite()); // true
 
 foreach($range as $i => $value) {
@@ -89,7 +89,7 @@ foreach($range as $i => $value) {
 // out: 1 3 5 7 9 11 13...
 
 /* Float range */
-$range = new FloatRange(1.1, 3, 2.1);
+$range = new Range(1.1, 3, 2.1);
 var_dump($range->isInfinite()); // false
 
 foreach($range as $value) {
@@ -101,11 +101,12 @@ foreach($range as $value) {
 #### Exponential
 
 ```php
-use Smoren\Sequence\Structs\IntExponential;
+use Smoren\Sequence\Structs\Exponential;
 use Smoren\Sequence\Structs\FloatExponential;
+use Smoren\Sequence\Exceptions\OutOfRangeException;
 
 /* Simple int exponential sequence */
-$sequence = new IntExponential(1, 4, 2); // (from, size, step)
+$sequence = new Exponential(1, 4, 2); // (from, size, step)
 var_dump($sequence->isInfinite()); // false
 
 foreach($sequence as $value) {
@@ -136,7 +137,7 @@ try {
 }
 
 /* Infinite int exponential sequence */
-$sequence = new IntExponential(1, null, 2);
+$sequence = new Exponential(1, null, 2);
 var_dump($sequence->isInfinite()); // true
 
 foreach($sequence as $i => $value) {
@@ -146,7 +147,7 @@ foreach($sequence as $i => $value) {
 // out: 1 2 4 8 16 32 64...
 
 /* Infinite float exponential sequence */
-$sequence = new FloatRange(0.5, null, 2);
+$sequence = new Exponential(0.5, null, 2);
 var_dump($sequence->isInfinite()); // true
 
 foreach($sequence as $value) {

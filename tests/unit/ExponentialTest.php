@@ -7,13 +7,13 @@ namespace Smoren\Sequence\Tests\Unit;
 use Codeception\Test\Unit;
 use Smoren\Sequence\Exceptions\OutOfRangeException;
 use Smoren\Sequence\Exceptions\ReadOnlyException;
-use Smoren\Sequence\Structs\FloatExponential;
+use Smoren\Sequence\Structs\Exponential;
 
-class FloatExponentialTest extends Unit
+class ExponentialTest extends Unit
 {
     public function testSimple()
     {
-        $range = new FloatExponential(0, 3, 1);
+        $range = new Exponential(0, 3, 1);
         $this->assertCount(3, $range);
         $this->assertFalse($range->isInfinite());
 
@@ -51,7 +51,7 @@ class FloatExponentialTest extends Unit
 
     public function testHard()
     {
-        $range = new FloatExponential(1, 3, 2);
+        $range = new Exponential(1, 3, 2);
         $this->assertCount(3, $range);
         $this->assertFalse($range->isInfinite());
 
@@ -89,7 +89,7 @@ class FloatExponentialTest extends Unit
 
     public function testInfinite()
     {
-        $range = new FloatExponential(1, null, 2);
+        $range = new Exponential(1, null, 2);
         $this->assertEquals(-1, count($range));
         $this->assertTrue($range->isInfinite());
         $this->assertEquals(1, $range[0]);
@@ -118,7 +118,7 @@ class FloatExponentialTest extends Unit
         $this->assertEquals([1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024], $result);
     }
 
-    protected function checkIsOffsetOutOfRange(FloatExponential $range, $offset): void
+    protected function checkIsOffsetOutOfRange(Exponential $range, $offset): void
     {
         try {
             $range[$offset];

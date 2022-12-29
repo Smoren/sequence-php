@@ -30,9 +30,9 @@ class IndexedArray implements IndexedArrayInterface
     /**
      * {@inheritDoc}
      */
-    public function getRange(): IntRange
+    public function getRange(): Range
     {
-        return new IntRange(0, count($this->source), 1);
+        return new Range(0, count($this->source), 1);
     }
 
     /**
@@ -45,6 +45,7 @@ class IndexedArray implements IndexedArrayInterface
 
     /**
      * {@inheritDoc}
+     * @param int $offset
      */
     public function offsetExists($offset): bool
     {
@@ -53,6 +54,7 @@ class IndexedArray implements IndexedArrayInterface
 
     /**
      * {@inheritDoc}
+     * @param int $offset
      */
     public function offsetGet($offset)
     {
@@ -62,6 +64,7 @@ class IndexedArray implements IndexedArrayInterface
 
     /**
      * {@inheritDoc}
+     * @param int|null $offset
      */
     public function offsetSet($offset, $value): void
     {
@@ -80,6 +83,7 @@ class IndexedArray implements IndexedArrayInterface
 
     /**
      * {@inheritDoc}
+     * @param int $offset
      */
     public function offsetUnset($offset): void
     {

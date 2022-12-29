@@ -1,19 +1,38 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Smoren\Sequence\Traits;
+namespace Smoren\Sequence\Structs;
 
 use Smoren\Sequence\Exceptions\OutOfRangeException;
 use Smoren\Sequence\Exceptions\ReadOnlyException;
 use Smoren\Sequence\Interfaces\SequenceInterface;
+use Smoren\Sequence\Interfaces\SequenceIteratorInterface;
+use Smoren\Sequence\Iterators\SequenceIterator;
 
 /**
- * @implements SequenceInterface<mixed>
- * @method getValueByIndex(int $index)
+ * @template T
+ * @implements SequenceInterface<T>
  */
-trait SequenceTrait
+abstract class Sequence implements SequenceInterface
 {
+    /**
+     * @var T
+     */
+    protected $start;
+    /**
+     * @var int<0, max>|null
+     */
+    protected ?int $size;
+
+    /**
+     * @param T $start
+     * @param int<0, max>|null $size
+     */
+    public function __construct($start, ?int $size)
+    {
+        $this->start = $start;
+        $this->size = $size;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -66,11 +85,19 @@ trait SequenceTrait
     }
 
     /**
-     * @param int|mixed $offset
-     * @return float
+     * @return T
+     */
+    public function getStartValue()
+    {
+        return $this->getValueByIndex(0);
+    }
+
+    /**
+     * @param int $offset
+     * @return T
      * @throws OutOfRangeException
      */
-    protected function _offsetGet($offset): float
+    public function offsetGet($offset)
     {
         if(!$this->offsetExists($offset)) {
             throw new OutOfRangeException();
@@ -89,5 +116,14 @@ trait SequenceTrait
         $offset = ($offset % $this->size);
 
         return $this->getValueByIndex($offset);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return SequenceIteratorInterface<T>
+     */
+    public function getIterator(): SequenceIteratorInterface
+    {
+        return new SequenceIterator($this);
     }
 }

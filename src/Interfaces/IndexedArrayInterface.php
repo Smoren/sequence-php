@@ -9,7 +9,7 @@ use Countable;
 use IteratorAggregate;
 use Smoren\Sequence\Exceptions\OutOfRangeException;
 use Smoren\Sequence\Iterators\IndexedArrayIterator;
-use Smoren\Sequence\Structs\IntRange;
+use Smoren\Sequence\Structs\Range;
 
 /**
  * @template T
@@ -19,9 +19,9 @@ use Smoren\Sequence\Structs\IntRange;
 interface IndexedArrayInterface extends ArrayAccess, Countable, IteratorAggregate
 {
     /**
-     * @return IntRange
+     * @return Range<int>
      */
-    public function getRange(): IntRange;
+    public function getRange(): Range;
 
     /**
      * @return IndexedArrayIterator<T>
