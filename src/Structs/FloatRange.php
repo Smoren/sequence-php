@@ -21,4 +21,12 @@ class FloatRange extends FloatSequence
     {
         return $this->start + $index * $this->step;
     }
+
+    /**
+     * @return float
+     */
+    public function getStartValue(): float
+    {
+        return $this->getValueByIndex(0);
+    }
 }

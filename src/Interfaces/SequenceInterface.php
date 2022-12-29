@@ -23,6 +23,23 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
     public function isInfinite(): bool;
 
     /**
+     * @param int $index
+     * @return mixed
+     */
+    public function getValueByIndex(int $index);
+
+    /**
+     * @return T
+     */
+    public function getStartValue();
+
+    /**
+     * @param T $previousValue
+     * @return T
+     */
+    //public function getNextValue($previousValue);
+
+    /**
      * @param int|mixed $offset
      * @return bool
      */

@@ -21,4 +21,12 @@ class IntRange extends IntSequence
     {
         return $this->start + $index * $this->step;
     }
+
+    /**
+     * @return int
+     */
+    public function getStartValue(): int
+    {
+        return $this->getValueByIndex(0);
+    }
 }

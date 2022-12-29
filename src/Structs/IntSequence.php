@@ -47,6 +47,14 @@ abstract class IntSequence implements SequenceInterface
     abstract public function getValueByIndex(int $index): int;
 
     /**
+     * @return int
+     */
+    public function getStartValue(): int
+    {
+        return $this->getValueByIndex(0);
+    }
+
+    /**
      * {@inheritDoc}
      * @return int
      */

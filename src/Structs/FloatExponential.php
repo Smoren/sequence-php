@@ -21,4 +21,12 @@ class FloatExponential extends FloatSequence
     {
         return $this->start * ($this->step ** $index);
     }
+
+    /**
+     * @return float
+     */
+    public function getStartValue(): float
+    {
+        return $this->getValueByIndex(0);
+    }
 }

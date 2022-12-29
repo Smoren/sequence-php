@@ -17,4 +17,12 @@ class IntExponential extends IntSequence
     {
         return (int)($this->start * ($this->step ** $index));
     }
+
+    /**
+     * @return int
+     */
+    public function getStartValue(): int
+    {
+        return $this->getValueByIndex(0);
+    }
 }

@@ -47,6 +47,14 @@ abstract class FloatSequence implements SequenceInterface
     abstract public function getValueByIndex(int $index): float;
 
     /**
+     * @return float
+     */
+    public function getStartValue(): float
+    {
+        return $this->getValueByIndex(0);
+    }
+
+    /**
      * {@inheritDoc}
      * @return float
      */
