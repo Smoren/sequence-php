@@ -27,17 +27,17 @@ composer test
 ```php
 use function Smoren\Sequence\Functions\xrange;
 
-foreach(xrange(5) as $i) {
+foreach(xrange(5) as $i) { // start: 0; count: 5; step: 1
     echo "{$i} ";
 }
 // out: 0 1 2 3 4
 
-foreach(xrange(1, 5) as $i) {
+foreach(xrange(1, 5) as $i) { // start: 1; count: 5; step: 1
     echo "{$i} ";
 }
 // out: 1 2 3 4 5
 
-foreach(xrange(1, 5, 2) as $i) {
+foreach(xrange(1, 5, 2) as $i) { // start: 1; count: 5; step: 2
     echo "{$i} ";
 }
 // out: 1 3 5 7 9
@@ -102,7 +102,6 @@ foreach($range as $value) {
 
 ```php
 use Smoren\Sequence\Structs\Exponential;
-use Smoren\Sequence\Structs\FloatExponential;
 use Smoren\Sequence\Exceptions\OutOfRangeException;
 
 /* Simple int exponential sequence */
