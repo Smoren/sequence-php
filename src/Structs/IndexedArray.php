@@ -9,18 +9,22 @@ use Smoren\Sequence\Interfaces\IndexedArrayInterface;
 use Smoren\Sequence\Iterators\IndexedArrayIterator;
 
 /**
+ * Implementation of Indexed Array.
+ *
  * @template T
  * @implements IndexedArrayInterface<T>
  */
 class IndexedArray implements IndexedArrayInterface
 {
     /**
-     * @var array<T>
+     * @var array<T> data storage
      */
     protected array $source;
 
     /**
-     * @param array<T> $source
+     * IndexedArray constructor.
+     *
+     * @param array<T> $source default data storage
      */
     public function __construct(array $source = [])
     {
@@ -45,7 +49,6 @@ class IndexedArray implements IndexedArrayInterface
 
     /**
      * {@inheritDoc}
-     * @param int $offset
      */
     public function offsetExists($offset): bool
     {
@@ -54,7 +57,6 @@ class IndexedArray implements IndexedArrayInterface
 
     /**
      * {@inheritDoc}
-     * @param int $offset
      */
     public function offsetGet($offset)
     {
@@ -64,7 +66,6 @@ class IndexedArray implements IndexedArrayInterface
 
     /**
      * {@inheritDoc}
-     * @param int|null $offset
      */
     public function offsetSet($offset, $value): void
     {
@@ -83,7 +84,6 @@ class IndexedArray implements IndexedArrayInterface
 
     /**
      * {@inheritDoc}
-     * @param int $offset
      */
     public function offsetUnset($offset): void
     {

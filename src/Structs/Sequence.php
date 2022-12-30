@@ -9,21 +9,25 @@ use Smoren\Sequence\Interfaces\SequenceIteratorInterface;
 use Smoren\Sequence\Iterators\SequenceIterator;
 
 /**
+ * Base class for sequences.
+ *
  * @template T
  * @implements SequenceInterface<T>
  */
 abstract class Sequence implements SequenceInterface
 {
     /**
-     * @var T
+     * @var T start value of the sequence
      */
     protected $start;
     /**
-     * @var int<0, max>|null
+     * @var int<0, max>|null size of the sequence (infinite if null)
      */
     protected ?int $size;
 
     /**
+     * Sequence constructor.
+     *
      * @param T $start
      * @param int<0, max>|null $size
      */
@@ -85,7 +89,7 @@ abstract class Sequence implements SequenceInterface
     }
 
     /**
-     * @return T
+     * {@inheritDoc}
      */
     public function getStartValue()
     {
@@ -93,9 +97,7 @@ abstract class Sequence implements SequenceInterface
     }
 
     /**
-     * @param int $offset
-     * @return T
-     * @throws OutOfRangeException
+     * {@inheritDoc}
      */
     public function offsetGet($offset)
     {
@@ -120,7 +122,6 @@ abstract class Sequence implements SequenceInterface
 
     /**
      * {@inheritDoc}
-     * @return SequenceIteratorInterface<T>
      */
     public function getIterator(): SequenceIteratorInterface
     {

@@ -8,22 +8,26 @@ use Smoren\Sequence\Interfaces\IndexedArrayInterface;
 use Smoren\Sequence\Interfaces\SequenceIteratorInterface;
 
 /**
+ * Iterator implementation for IndexedArray.
+ *
  * @template T
- * @implements SequenceIteratorInterface<IndexedArrayInterface<T>>
+ * @implements SequenceIteratorInterface<T>
  */
 class IndexedArrayIterator implements SequenceIteratorInterface
 {
     /**
-     * @var IndexedArrayInterface<T>
+     * @var IndexedArrayInterface<T> indexed array for iterating
      */
     protected IndexedArrayInterface $array;
     /**
-     * @var int
+     * @var int current iteration index
      */
     protected int $currentIndex;
 
     /**
-     * @param IndexedArrayInterface<T> $array
+     * IndexedArrayIterator constructor.
+     *
+     * @param IndexedArrayInterface<T> $array indexed array to iterate
      */
     public function __construct(IndexedArrayInterface $array)
     {
@@ -33,7 +37,6 @@ class IndexedArrayIterator implements SequenceIteratorInterface
 
     /**
      * {@inheritDoc}
-     * @return mixed
      */
     public function current()
     {

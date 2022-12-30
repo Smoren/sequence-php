@@ -3,20 +3,24 @@
 namespace Smoren\Sequence\Structs;
 
 /**
+ * Implementation of sequence with constant step.
+ *
  * @template T
  * @extends Sequence<T>
  */
 abstract class StepSequence extends Sequence
 {
     /**
-     * @var T
+     * @var T step of the sequence
      */
     protected $step;
 
     /**
-     * @param T $start
-     * @param int<0, max>|null $size
-     * @param T $step
+     * StepSequence constructor.
+     *
+     * @param T $start start of the sequence
+     * @param int<0, max>|null $size size of the sequence (infinite if null)
+     * @param T $step sequence step
      */
     public function __construct($start, ?int $size, $step)
     {

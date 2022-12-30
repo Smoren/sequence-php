@@ -43,7 +43,8 @@ interface IndexedArrayInterface extends ArrayAccess, Countable, IteratorAggregat
     /**
      * {@inheritDoc}
      *
-     * @param int|mixed $offset
+     * @param int $offset
+     *
      * @return bool
      */
     public function offsetExists($offset): bool;
@@ -52,7 +53,9 @@ interface IndexedArrayInterface extends ArrayAccess, Countable, IteratorAggregat
      * {@inheritDoc}
      *
      * @param int $offset
+     *
      * @return T
+     *
      * @throws OutOfRangeException if key does not exist in array
      */
     #[\ReturnTypeWillChange]
@@ -63,7 +66,9 @@ interface IndexedArrayInterface extends ArrayAccess, Countable, IteratorAggregat
      *
      * @param int|null $offset
      * @param T $value
+     *
      * @return void
+     *
      * @throws OutOfRangeException if key is not null and does not exist in array
      */
     public function offsetSet($offset, $value): void;
@@ -71,8 +76,10 @@ interface IndexedArrayInterface extends ArrayAccess, Countable, IteratorAggregat
     /**
      * {@inheritDoc}
      *
-     * @param int|mixed $offset
+     * @param int $offset
+     *
      * @return void
+     *
      * @throws OutOfRangeException if key does not exist in array
      */
     public function offsetUnset($offset): void;

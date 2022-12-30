@@ -12,7 +12,8 @@ use Smoren\Sequence\Structs\Range;
  * @param int $start start value
  * @param int<0, max>|null $size size of elements (infinite if null)
  * @param int $step range step
- * @return Range<int>
+ *
+ * @return Range<int> iterable range
  */
 function xrange(int $start, ?int $size = null, int $step = 1): Range
 {

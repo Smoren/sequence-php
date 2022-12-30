@@ -8,25 +8,29 @@ use Smoren\Sequence\Interfaces\SequenceInterface;
 use Smoren\Sequence\Interfaces\SequenceIteratorInterface;
 
 /**
+ * Iterator implementation for sequences.
+ *
  * @template T
  * @implements SequenceIteratorInterface<T>
  */
 class SequenceIterator implements SequenceIteratorInterface
 {
     /**
-     * @var SequenceInterface<T>
+     * @var SequenceInterface<T> sequence for iterating
      */
     protected SequenceInterface $sequence;
     /**
-     * @var int
+     * @var int current iteration index
      */
     protected int $currentIndex;
     /**
-     * @var T
+     * @var T current iteration value
      */
     protected $currentValue;
 
     /**
+     * SequenceIterator constructor.
+     *
      * @param SequenceInterface<T> $sequence
      */
     public function __construct(SequenceInterface $sequence)
@@ -37,7 +41,6 @@ class SequenceIterator implements SequenceIteratorInterface
 
     /**
      * {@inheritDoc}
-     * @return T
      */
     public function current()
     {

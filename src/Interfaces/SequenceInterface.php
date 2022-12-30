@@ -30,6 +30,7 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
      * Returns sequence value by index.
      *
      * @param int $index
+     *
      * @return T
      */
     public function getValueByIndex(int $index);
@@ -45,6 +46,7 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
      * Returns next value of the sequence by its previous value.
      *
      * @param T $previousValue
+     *
      * @return T
      */
     public function getNextValue($previousValue);
@@ -53,6 +55,7 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
      * {@inheritDoc}
      *
      * @param int $offset
+     *
      * @return bool
      */
     public function offsetExists($offset): bool;
@@ -61,7 +64,9 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
      * {@inheritDoc}
      *
      * @param int $offset
+     *
      * @return T
+     *
      * @throws OutOfRangeException
      */
     #[\ReturnTypeWillChange]
@@ -72,7 +77,9 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
      *
      * @param int|null $offset
      * @param T $value
+     *
      * @return void
+     *
      * @throws ReadOnlyException
      */
     public function offsetSet($offset, $value): void;
@@ -81,7 +88,9 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
      * {@inheritDoc}
      *
      * @param int $offset
+     *
      * @return void
+     *
      * @throws ReadOnlyException
      */
     public function offsetUnset($offset): void;
@@ -90,4 +99,11 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
      * {@inheritDoc}
      */
     public function count(): int;
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return SequenceIteratorInterface<T>
+     */
+    public function getIterator(): SequenceIteratorInterface;
 }

@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace Smoren\Sequence\Structs;
 
 /**
+ * Exponential sequence.
+ *
  * @template T of int|float
  * @extends StepSequence<T>
  */
 class Exponential extends StepSequence
 {
     /**
-     * @param T $start
-     * @param int<0, max>|null $size
-     * @param T $step
+     * Exponential constructor.
+     *
+     * @param T $start start of the sequence
+     * @param int<0, max>|null $size size of the sequence (infinite if null)
+     * @param T $step sequence step
      */
     public function __construct($start, ?int $size, $step)
     {
@@ -21,8 +25,7 @@ class Exponential extends StepSequence
     }
 
     /**
-     * @param int $index
-     * @return T
+     * {@inheritDoc}
      */
     public function getValueByIndex(int $index)
     {
@@ -34,8 +37,7 @@ class Exponential extends StepSequence
     }
 
     /**
-     * @param int $previousValue
-     * @return T
+     * {@inheritDoc}
      */
     public function getNextValue($previousValue)
     {
