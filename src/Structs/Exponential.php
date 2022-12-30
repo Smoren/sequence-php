@@ -26,6 +26,10 @@ class Exponential extends StepSequence
      */
     public function getValueByIndex(int $index)
     {
+        if ((float)$this->step === 0.0 && $index < 0) {
+            throw new \DivisionByZeroError();
+        }
+
         return $this->start * ($this->step ** $index);
     }
 

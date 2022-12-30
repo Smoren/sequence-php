@@ -10,33 +10,63 @@ use function Smoren\Sequence\Functions\xrange;
 
 class FunctionsTest extends Unit
 {
-    public function testXrange()
+    /**
+     * @dataProvider dataProviderForXrange
+     * @param array<int> $config
+     * @param array<int> $expected
+     * @return void
+     */
+    public function testXrange(array $config, array $expected): void
     {
-        $range = xrange(10);
-        $this->assertEquals(range(0, 9), iterator_to_array($range));
+        // Given
+        $range = xrange(...$config);
 
-        $range = xrange(0, 10);
-        $this->assertEquals(range(0, 9), iterator_to_array($range));
+        // When
+        $result = iterator_to_array($range);
 
-        $range = xrange(2, 10);
-        $this->assertEquals(range(2, 11), iterator_to_array($range));
+        // Then
+        $this->assertEquals($expected, $result);
+    }
 
-        $range = xrange(2, 3, 3);
-        $this->assertEquals([2, 5, 8], iterator_to_array($range));
-
-        $range = xrange(0);
-        $this->assertEquals([], iterator_to_array($range));
-
-        $range = xrange(0, 0);
-        $this->assertEquals([], iterator_to_array($range));
-
-        $range = xrange(0, 0, 0);
-        $this->assertEquals([], iterator_to_array($range));
-
-        $range = xrange(0, -1);
-        $this->assertEquals([], iterator_to_array($range));
-
-        $range = xrange(0, -1, 0);
-        $this->assertEquals([], iterator_to_array($range));
+    public function dataProviderForXrange(): array
+    {
+        return [
+            [
+                [10],
+                range(0, 9),
+            ],
+            [
+                [0, 10],
+                range(0, 9),
+            ],
+            [
+                [2, 10],
+                range(2, 11)   ,
+            ],
+            [
+                [2, 3, 3],
+                [2, 5, 8],
+            ],
+            [
+                [0],
+                [],
+            ],
+            [
+                [0, 0],
+                [],
+            ],
+            [
+                [0, 0, 0],
+                [],
+            ],
+            [
+                [0, -1],
+                [],
+            ],
+            [
+                [0, -1, 0],
+                [],
+            ],
+        ];
     }
 }

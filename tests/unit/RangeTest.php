@@ -11,11 +11,11 @@ use Smoren\Sequence\Structs\Range;
 
 class RangeTest extends Unit
 {
-    protected const PRECISION = 4;
+    protected const PRECISION = 0.00001;
 
     /**
      * @dataProvider dataProviderForEqualNonInfinite
-     * @param array<int|float> $config
+     * @param array{int|float, int, int|float} $config
      * @param array<int|float> $expected
      * @return void
      */
@@ -59,7 +59,7 @@ class RangeTest extends Unit
     }
 
     /**
-     * @return array{array<int|float>, array<int|float>}
+     * @return array{array{int|float, int, int|float}, array<int|float>}
      */
     public function dataProviderForEqualNonInfinite(): array
     {
@@ -83,8 +83,8 @@ class RangeTest extends Unit
 
     /**
      * @dataProvider dataProviderForOutOfRangeNonInfinite
-     * @param array<int> $config
-     * @param array<mixed> $indexes
+     * @param array{int|float, int, int|float} $config
+     * @param array<int|float|mixed> $indexes
      * @return void
      */
     public function testOutOfRangeNonInfinite(array $config, array $indexes): void
@@ -103,6 +103,9 @@ class RangeTest extends Unit
         }
     }
 
+    /**
+     * @return array{array{int|float, int, int|float}, array<int|float>}
+     */
     public function dataProviderForOutOfRangeNonInfinite(): array
     {
         return [
@@ -127,7 +130,7 @@ class RangeTest extends Unit
 
     /**
      * @dataProvider dataProviderForInfinite
-     * @param array<int|float> $config
+     * @param array{int|float, null, int|float} $config
      * @param array<int|float> $expectedDirect
      * @param array<int|float> $expectedReverse
      * @return void
@@ -158,7 +161,7 @@ class RangeTest extends Unit
     }
 
     /**
-     * @return array{array<int|float>, array<int|float>, array<int|float>}
+     * @return array{array{int|float, null, int|float}, array<int|float>, array<int|float>}
      */
     public function dataProviderForInfinite(): array
     {
@@ -171,12 +174,12 @@ class RangeTest extends Unit
             [
                 [0, null, 2],
                 range(0, 99, 2),
-                range(-1, -100, -2.0),
+                range(-2, -100, -2.0),
             ],
             [
                 [0, null, 0.1],
                 range(0, 9, 0.1),
-                range(-1, -10, -0.1),
+                range(-0.1, -10, -0.1),
             ],
             [
                 [1, null, 0],
