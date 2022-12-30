@@ -276,7 +276,7 @@ Function for reduction of iterable collection.
 use function Smoren\Sequence\Functions\reduce;
 
 $input = [1, 2, 3, 4, 5];
-$result = filter($input, static function($carry, $item) {
+$result = reduce($input, static function($carry, $item) {
     return $carry + $item;
 }, 0);
 var_dump($result);
