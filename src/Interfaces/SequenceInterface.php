@@ -80,7 +80,7 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
      *
      * @return void
      *
-     * @throws ReadOnlyException
+     * @throws ReadOnlyException anyway
      */
     public function offsetSet($offset, $value): void;
 
@@ -91,7 +91,7 @@ interface SequenceInterface extends ArrayAccess, Countable, IteratorAggregate
      *
      * @return void
      *
-     * @throws ReadOnlyException
+     * @throws ReadOnlyException anyway
      */
     public function offsetUnset($offset): void;
 
