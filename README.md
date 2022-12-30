@@ -30,17 +30,17 @@ use function Smoren\Sequence\Functions\xrange;
 foreach(xrange(5) as $i) { // start: 0; count: 5; step: 1
     echo "{$i} ";
 }
-// out: 0 1 2 3 4
+// 0 1 2 3 4
 
 foreach(xrange(1, 5) as $i) { // start: 1; count: 5; step: 1
     echo "{$i} ";
 }
-// out: 1 2 3 4 5
+// 1 2 3 4 5
 
 foreach(xrange(1, 5, 2) as $i) { // start: 1; count: 5; step: 2
     echo "{$i} ";
 }
-// out: 1 3 5 7 9
+// 1 3 5 7 9
 ```
 
 #### Range
@@ -56,7 +56,7 @@ var_dump($range->isInfinite()); // false
 foreach($range as $value) {
     echo "{$value} ";
 }
-// out: 1 3 5
+// 1 3 5
 
 var_dump($range[0]); // 1
 var_dump($range[1]); // 3
@@ -86,7 +86,7 @@ foreach($range as $i => $value) {
     echo "{$value} ";
     if($i > 100) break;
 }
-// out: 1 3 5 7 9 11 13...
+// 1 3 5 7 9 11 13...
 
 /* Float range */
 $range = new Range(1.1, 3, 2.1);
@@ -95,7 +95,7 @@ var_dump($range->isInfinite()); // false
 foreach($range as $value) {
     echo "{$value} ";
 }
-// out: 1.1 3.2 5.3
+// 1.1 3.2 5.3
 ```
 
 #### Exponential
@@ -111,7 +111,7 @@ var_dump($sequence->isInfinite()); // false
 foreach($sequence as $value) {
     echo "{$value} ";
 }
-// out: 1 2 4 8
+// 1 2 4 8
 
 var_dump($sequence[0]); // 1
 var_dump($sequence[1]); // 2
@@ -143,7 +143,7 @@ foreach($sequence as $i => $value) {
     echo "{$value} ";
     if($i > 100) break;
 }
-// out: 1 2 4 8 16 32 64...
+// 1 2 4 8 16 32 64...
 
 /* Infinite float exponential sequence */
 $sequence = new Exponential(0.5, null, 2);
@@ -152,7 +152,7 @@ var_dump($sequence->isInfinite()); // true
 foreach($sequence as $value) {
     echo "{$value} ";
 }
-// out: 0.5 0.25 0.125...
+// 0.5 0.25 0.125...
 ```
 
 #### IndexedArray
@@ -192,4 +192,77 @@ try {
 } catch(OutOfRangeException $e) {
     echo "cannot unset value from index out of range\n";
 }
+```
+
+#### xrange
+
+Function for creating iterable range.
+
+```xrange(int $start, ?int $size = null, int $step = 1): Range```
+
+```php
+use function Smoren\Sequence\Functions\xrange;
+
+$range = xrange(5);
+print_r(iterator_to_array($range));
+// [0, 1, 2, 3, 4]
+
+$range = xrange(1, 5);
+print_r(iterator_to_array($range));
+// [1, 2, 3, 4, 5]
+
+$range = xrange(1, 5, 2);
+print_r(iterator_to_array($range));
+// [1, 3, 5, 7, 9]
+```
+
+#### map
+
+Function for mapping iterable collection and creating IndexedArray of mapped values as a result.
+
+```map(iterable $collection, callable $mapper): IndexedArray```
+
+```php
+use function Smoren\Sequence\Functions\map;
+
+$input = [1, 2, 3, 4, 5];
+$result = map($input, static function($item) {
+    return $item + 2;
+});
+print_r($result->toArray());
+// [3, 4, 5, 6, 7]
+```
+
+#### filter
+
+Function for filtering iterable collection and returning IndexedArray of filtered items.
+
+```filter(iterable $collection, callable $filter): IndexedArray```
+
+```php
+use function Smoren\Sequence\Functions\filter;
+
+$input = [1, 2, 3, 4, 5];
+$result = filter($input, static function($item) {
+    return $item > 2;
+});
+print_r($result->toArray());
+// [3, 4, 5]
+```
+
+#### reduce
+
+Function for reduction of iterable collection.
+
+```reduce(iterable $collection, callable $reducer, mixed $initialValue = null): IndexedArray```
+
+```php
+use function Smoren\Sequence\Functions\reduce;
+
+$input = [1, 2, 3, 4, 5];
+$result = filter($input, static function($carry, $item) {
+    return $carry + $item;
+}, 0);
+var_dump($result);
+// 15
 ```
