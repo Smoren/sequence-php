@@ -21,10 +21,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Smoren\\Sequence\\": "src",
-      "Smoren\\Sequence\\Tests\\Unit\\": "tests/unit"
+      "Smoren\\Sequence\\": "src"
     },
     "files": ["src/functions.php"]
+  },
+  "autoload-dev": {
+    "Smoren\\Sequence\\Tests\\Unit\\": "tests/unit"
   },
   "config": {
     "fxp-asset": {
