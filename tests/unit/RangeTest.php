@@ -11,6 +11,110 @@ use Smoren\Sequence\Structs\Range;
 
 class RangeTest extends Unit
 {
+    protected const PRECISION = 4;
+
+    /**
+     * @dataProvider dataProviderForEqualNonInfinite
+     * @param array<int|float> $config
+     * @param array<int|float> $expected
+     * @return void
+     */
+    public function testEqualNonInfinite(array $config, array $expected): void
+    {
+        // Given
+        $range = new Range(...$config);
+
+        // When
+        $result = iterator_to_array($range);
+
+        // Then
+        $this->assertFalse($range->isInfinite());
+        $this->assertEqualsWithDelta($expected, $result, self::PRECISION);
+        $this->assertEquals(count($range), count($expected));
+
+        // iterating and accessing by indexes checks
+        $iterationsCount = 0;
+        foreach($range as $index => $value) {
+            $this->assertEqualsWithDelta($expected[$index], $value, self::PRECISION);
+            $this->assertEqualsWithDelta($expected[$index], $range[$index], self::PRECISION);
+
+            $negativeIndex = -$index - 1;
+            $reverseIndex = count($expected) + $negativeIndex;
+
+            $this->assertEqualsWithDelta($expected[$reverseIndex], $range[$negativeIndex], self::PRECISION);
+            ++$iterationsCount;
+        }
+
+        $this->assertEquals(count($expected), $iterationsCount);
+    }
+
+    /**
+     * @return array{array<int|float>, array<int|float>}
+     */
+    public function dataProviderForEqualNonInfinite(): array
+    {
+        return [
+            [   [0, 0, 0],                  []                  ],
+            [   [0, 0, 1],                  []                  ],
+            [   [1, 0, 1],                  []                  ],
+            [   [0, 1, 1],                  [0]                 ],
+            [   [0, 1, 0],                  [0]                 ],
+            [   [0, 1, 2],                  [0]                 ],
+            [   [1, 1, 2],                  [1]                 ],
+            [   [0, 3, 1],                  [0, 1, 2]           ],
+            [   [1, 3, 1],                  [1, 2, 3]           ],
+            [   [1, 3, 0],                  [1, 1, 1]           ],
+            [   [0, 5, 2],                  [0, 2, 4, 6, 8]     ],
+            [   [0, 3, -1],                 [0, -1, -2]         ],
+            [   [-1, 3, -1],                [-1, -2, -3]        ],
+            [   [5.5, 3, 1.1],              [5.5, 6.6, 7.7]     ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataProviderForOutOfRangeNonInfinite
+     * @param array<int> $config
+     * @param array<mixed> $indexes
+     * @return void
+     */
+    public function testOutOfRangeNonInfinite(array $config, array $indexes): void
+    {
+        // Given
+        $range = new Range(...$config);
+
+        // When
+        foreach($indexes as $index) {
+            try {
+                $range[$index];
+                $this->fail();
+            } catch(OutOfRangeException $e) {
+                // Then
+            }
+
+        }
+    }
+
+    public function dataProviderForOutOfRangeNonInfinite(): array
+    {
+        return [
+            [   [0, 0, 0],                  [0, 1, -1, -2]      ],
+            [   [0, 0, 1],                  [0, 1, -1, -2]      ],
+            [   [1, 0, 1],                  [0, 1, -1, -2]      ],
+            [   [0, 1, 1],                  [1, 2, -2, -3]      ],
+            [   [0, 1, 0],                  [1, 2, -2, -3]      ],
+            [   [0, 1, 2],                  [1, 2, -2, -3]      ],
+            [   [1, 1, 2],                  [1, 2, -2, -3]      ],
+            [   [0, 3, 1],                  [3, 4, -4, -5]      ],
+            [   [1, 3, 1],                  [3, 4, -4, -5]      ],
+            [   [1, 3, 0],                  [3, 4, -4, -5]      ],
+            [   [0, 5, 2],                  [5, 6, -6, -7]      ],
+            [   [0, 3, -1],                 [3, 4, -4, -5]      ],
+            [   [0, 100, 0],                [100, -101]         ],
+            [   [-1, 3, -1],                [3, 4, -4, -5]      ],
+            [   [5.5, 3, 1.1],              [3, 4, -4, -5]      ],
+        ];
+    }
+
     public function testIntWithStep1()
     {
         $range = new Range(0, 3, 1);
