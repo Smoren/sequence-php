@@ -155,6 +155,22 @@ foreach($sequence as $value) {
 // 0.5 0.25 0.125...
 ```
 
+#### DynamicSequence
+
+```php
+use Smoren\Sequence\Structs\DynamicSequence;
+
+// (from, size, nextValueGetter, indexValueGetter)
+$sequence = new DynamicSequence(1, 5, static function($previousValue) {
+    return $previousValue + 1;
+}, static function($index, $startValue) {
+    return $startValue + $index;
+});
+
+var_dump(iterator_to_array($sequence));
+// [1, 2, 3, 4, 5]
+```
+
 #### IndexedArray
 
 ```php
