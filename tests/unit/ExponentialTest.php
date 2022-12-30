@@ -319,7 +319,7 @@ class ExponentialTest extends Unit
 
     /**
      * @param Exponential $range
-     * @param $offset
+     * @param int|mixed $offset
      * @return void
      */
     protected function checkIsOffsetOutOfRange(Exponential $range, $offset): void

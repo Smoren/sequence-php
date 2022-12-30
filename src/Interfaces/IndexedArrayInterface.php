@@ -12,6 +12,14 @@ use Smoren\Sequence\Iterators\IndexedArrayIterator;
 use Smoren\Sequence\Structs\Range;
 
 /**
+ * Interface for Indexed Array.
+ *
+ * Its keys are always an unbroken sequence of natural numbers starting from zero.
+ *
+ * It is also allowed to access array elements from the end with negative indices.
+ *
+ * OutOfRangeException will be thrown when trying to access a non-existent index.
+ *
  * @template T
  * @extends ArrayAccess<int, T>
  * @extends IteratorAggregate<int, T>

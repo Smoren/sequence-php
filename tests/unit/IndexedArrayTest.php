@@ -11,7 +11,10 @@ use Smoren\Sequence\Structs\IndexedArray;
 
 class IndexedArrayTest extends Unit
 {
-    public function testRead()
+    /**
+     * @return void
+     */
+    public function testRead(): void
     {
         $array = new IndexedArray([10, 20, 30]);
         $this->assertCount(3, $array);
@@ -29,7 +32,10 @@ class IndexedArrayTest extends Unit
         $this->checkIsOffsetOutOfRange($array, -4);
     }
 
-    public function testAppendAndUnset()
+    /**
+     * @return void
+     */
+    public function testAppendAndUnset(): void
     {
         $array = new IndexedArray([10, 20, 30]);
         $this->assertCount(3, $array);
@@ -86,7 +92,10 @@ class IndexedArrayTest extends Unit
         $this->assertEquals([], iterator_to_array($array));
     }
 
-    public function testUpdate()
+    /**
+     * @return void
+     */
+    public function testUpdate(): void
     {
         $array = new IndexedArray([10, 20, 30]);
         $this->assertCount(3, $array);
@@ -114,6 +123,11 @@ class IndexedArrayTest extends Unit
         $this->assertEquals([11, 22, 33], iterator_to_array($array));
     }
 
+    /**
+     * @param IndexedArrayInterface $array
+     * @param int|mixed $offset
+     * @return void
+     */
     protected function checkIsOffsetOutOfRange(IndexedArrayInterface $array, $offset): void
     {
         try {

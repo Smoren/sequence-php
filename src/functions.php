@@ -5,9 +5,13 @@ namespace Smoren\Sequence\Functions;
 use Smoren\Sequence\Structs\Range;
 
 /**
- * @param int $start
- * @param int<0, max>|null $size
- * @param int $step
+ * Creates iterable range.
+ *
+ * If size is null then range is infinite.
+ *
+ * @param int $start start value
+ * @param int<0, max>|null $size size of elements (infinite if null)
+ * @param int $step range step
  * @return Range<int>
  */
 function xrange(int $start, ?int $size = null, int $step = 1): Range
