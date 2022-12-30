@@ -46,6 +46,16 @@ class RangeTest extends Unit
         }
 
         $this->assertEquals(count($expected), $iterationsCount);
+
+        // readonly checks
+        foreach($range as $index => $value) {
+            try {
+                $range[$index] = -1000;
+                $this->fail();
+            } catch(ReadOnlyException $e) {
+                $this->assertEqualsWithDelta($value, $range[$index], self::PRECISION);
+            }
+        }
     }
 
     /**
@@ -90,70 +100,106 @@ class RangeTest extends Unit
             } catch(OutOfRangeException $e) {
                 // Then
             }
-
         }
     }
 
     public function dataProviderForOutOfRangeNonInfinite(): array
     {
         return [
-            [   [0, 0, 0],                  [0, 1, -1, -2]      ],
-            [   [0, 0, 1],                  [0, 1, -1, -2]      ],
-            [   [1, 0, 1],                  [0, 1, -1, -2]      ],
-            [   [0, 1, 1],                  [1, 2, -2, -3]      ],
-            [   [0, 1, 0],                  [1, 2, -2, -3]      ],
-            [   [0, 1, 2],                  [1, 2, -2, -3]      ],
-            [   [1, 1, 2],                  [1, 2, -2, -3]      ],
-            [   [0, 3, 1],                  [3, 4, -4, -5]      ],
-            [   [1, 3, 1],                  [3, 4, -4, -5]      ],
-            [   [1, 3, 0],                  [3, 4, -4, -5]      ],
-            [   [0, 5, 2],                  [5, 6, -6, -7]      ],
-            [   [0, 3, -1],                 [3, 4, -4, -5]      ],
-            [   [0, 100, 0],                [100, -101]         ],
-            [   [-1, 3, -1],                [3, 4, -4, -5]      ],
-            [   [5.5, 3, 1.1],              [3, 4, -4, -5]      ],
+            [   [0, 0, 0],                  [0, 1, -1, -2]                  ],
+            [   [0, 0, 1],                  [0, 1, -1, -2]                  ],
+            [   [1, 0, 1],                  [0, 1, -1, -2]                  ],
+            [   [0, 1, 1],                  [1, 2, -2, -3]                  ],
+            [   [0, 1, 0],                  [1, 2, -2, -3]                  ],
+            [   [0, 1, 2],                  [1, 2, -2, -3]                  ],
+            [   [1, 1, 2],                  [1, 2, -2, -3]                  ],
+            [   [0, 3, 1],                  [3, 4, -4, -5]                  ],
+            [   [1, 3, 1],                  [3, 4, -4, -5]                  ],
+            [   [1, 3, 0],                  [3, 4, -4, -5]                  ],
+            [   [0, 5, 2],                  [5, 6, -6, -7]                  ],
+            [   [0, 3, -1],                 [3, 4, -4, -5]                  ],
+            [   [-1, 3, -1],                [3, 4, -4, -5]                  ],
+            [   [5.5, 3, 1.1],              [3, 4, -4, -5]                  ],
+            [   [0, 100, 0],                [100, -101]                     ],
+            [   [0, 100, 0],                [null, 'test', '', 10.5, '10']  ],
         ];
     }
 
-    public function testIntWithStep1()
+    /**
+     * @dataProvider dataProviderForInfinite
+     * @param array<int|float> $config
+     * @param array<int|float> $expectedDirect
+     * @param array<int|float> $expectedReverse
+     * @return void
+     */
+    public function testInfinite(array $config, array $expectedDirect, array $expectedReverse): void
     {
-        $range = new Range(0, 3, 1);
-        $this->assertCount(3, $range);
-        $this->assertFalse($range->isInfinite());
+        // Given
+        $resultDirect = [];
+        $resultReverse = [];
+        $range = new Range(...$config);
 
-        $this->assertEquals(0, $range[0]);
-        $this->assertEquals(1, $range[1]);
-        $this->assertEquals(2, $range[2]);
-        $this->checkIsOffsetOutOfRange($range, 3);
+        // When
+        foreach($range as $value) {
+            $resultDirect[] = $value;
 
-        $this->assertEquals(2, $range[-1]);
-        $this->assertEquals(1, $range[-2]);
-        $this->assertEquals(0, $range[-3]);
-        $this->checkIsOffsetOutOfRange($range, -4);
-
-        $this->checkIsOffsetOutOfRange($range, null);
-        $this->checkIsOffsetOutOfRange($range, 'test');
-        $this->checkIsOffsetOutOfRange($range, '');
-        $this->checkIsOffsetOutOfRange($range, 10.5);
-        $this->checkIsOffsetOutOfRange($range, '10');
-
-        try {
-            $range[0] = 1;
-            $this->fail();
-        } catch(ReadOnlyException $e) {
+            if(count($resultDirect) === count($expectedDirect)) {
+                break;
+            }
+        }
+        for($i=0; $i<count($expectedReverse); ++$i) {
+            $resultReverse[] = $range[-$i-1];
         }
 
-        try {
-            unset($range[0]);
-            $this->fail();
-        } catch(ReadOnlyException $e) {
-        }
-
-        $this->assertEquals([0, 1, 2], iterator_to_array($range));
-        $this->assertEquals([0, 1, 2], iterator_to_array($range));
+        // Then
+        $this->assertTrue($range->isInfinite());
+        $this->assertEqualsWithDelta($expectedDirect, $resultDirect, self::PRECISION);
+        $this->assertEqualsWithDelta($expectedReverse, $resultReverse, self::PRECISION);
     }
 
-    public function testIntWithStep2()
+    /**
+     * @return array{array<int|float>, array<int|float>, array<int|float>}
+     */
+    public function dataProviderForInfinite(): array
+    {
+        return [
+            [
+                [0, null, 1],
+                range(0, 99, 1),
+                range(-1, -100, -1.0),
+            ],
+            [
+                [0, null, 2],
+                range(0, 99, 2),
+                range(-1, -100, -2.0),
+            ],
+            [
+                [0, null, 0.1],
+                range(0, 9, 0.1),
+                range(-1, -10, -0.1),
+            ],
+            [
+                [1, null, 0],
+                array_fill(0, 100, 1),
+                array_fill(0, 100, 1),
+            ],
+            [
+                [0, null, 0],
+                array_fill(0, 100, 0),
+                array_fill(0, 100, 0),
+            ],
+            [
+                [1.1, null, 0],
+                array_fill(0, 100, 1.1),
+                array_fill(0, 100, 1.1),
+            ],
+        ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testSimpleScenario(): void
     {
         $range = new Range(1, 3, 2);
         $this->assertCount(3, $range);
@@ -191,72 +237,11 @@ class RangeTest extends Unit
         $this->assertEquals([1, 3, 5], iterator_to_array($range));
     }
 
-    public function testInfinite()
-    {
-        $range = new Range(1, null, 2);
-        $this->assertEquals(-1, $range->count());
-        $this->assertTrue($range->isInfinite());
-        $this->assertEquals(1, $range[0]);
-        $this->assertEquals(3, $range[1]);
-        $this->assertEquals(5, $range[2]);
-        $this->assertEquals(7, $range[3]);
-
-        $this->assertEquals(-1, $range[-1]);
-        $this->assertEquals(-3, $range[-2]);
-        $this->assertEquals(-5, $range[-3]);
-        $this->assertEquals(-7, $range[-4]);
-
-        $this->checkIsOffsetOutOfRange($range, null);
-        $this->checkIsOffsetOutOfRange($range, 'test');
-        $this->checkIsOffsetOutOfRange($range, '');
-        $this->checkIsOffsetOutOfRange($range, 10.5);
-        $this->checkIsOffsetOutOfRange($range, '10');
-
-        $result = [];
-        foreach($range as $i => $value) {
-            $result[] = $value;
-            if($i === 100) {
-                break;
-            }
-        }
-        $this->assertEquals(range(1, 201, 2), $result);
-    }
-
-    public function testFloat()
-    {
-        $range = new Range(1.1, 3, 2.1);
-        $this->assertCount(3, $range);
-        $this->assertFalse($range->isInfinite());
-
-        $this->assertEquals(1.1, round($range[0], 2));
-        $this->assertEquals(3.2, round($range[1], 2));
-        $this->assertEquals(5.3, round($range[2], 2));
-        $this->checkIsOffsetOutOfRange($range, 3);
-
-        $this->assertEquals(5.3, round($range[-1], 2));
-        $this->assertEquals(3.2, round($range[-2], 2));
-        $this->assertEquals(1.1, round($range[-3], 2));
-        $this->checkIsOffsetOutOfRange($range, -4);
-
-        $this->checkIsOffsetOutOfRange($range, null);
-        $this->checkIsOffsetOutOfRange($range, 'test');
-        $this->checkIsOffsetOutOfRange($range, '');
-        $this->checkIsOffsetOutOfRange($range, 10.5);
-        $this->checkIsOffsetOutOfRange($range, '10');
-
-        try {
-            $range[0] = 1;
-            $this->fail();
-        } catch(ReadOnlyException $e) {
-        }
-
-        try {
-            unset($range[0]);
-            $this->fail();
-        } catch(ReadOnlyException $e) {
-        }
-    }
-
+    /**
+     * @param Range $range
+     * @param int|mixed $offset
+     * @return void
+     */
     protected function checkIsOffsetOutOfRange(Range $range, $offset): void
     {
         try {
