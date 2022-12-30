@@ -75,10 +75,10 @@ function filter(iterable $collection, callable $filter): IndexedArray
  * @template TOutput
  *
  * @param iterable<TInput> $collection
- * @param callable(TOutput|null $carry, TInput $item): TOutput $reducer
- * @param TOutput|null $initialValue
+ * @param callable(TOutput $carry, TInput $item): TOutput $reducer
+ * @param TOutput $initialValue
  *
- * @return TOutput|null
+ * @return TOutput
  */
 function reduce(iterable $collection, callable $reducer, $initialValue = null)
 {
