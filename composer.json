@@ -26,7 +26,9 @@
     "files": ["src/functions.php"]
   },
   "autoload-dev": {
-    "Smoren\\Sequence\\Tests\\Unit\\": "tests/unit"
+    "psr-4": {
+      "Smoren\\Sequence\\Tests\\Unit\\": "tests/unit"
+    }
   },
   "config": {
     "fxp-asset": {
