@@ -24,6 +24,9 @@ composer test
 
 #### Range-based for (python-like)
 
+unlike the built-in function `range()`, `xrange()` does not create an array, but a generator 
+that takes up a small amount of memory, regardless of the number of elements in the sequence.
+
 ```php
 use function Smoren\Sequence\Functions\xrange;
 
