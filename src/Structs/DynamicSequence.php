@@ -28,17 +28,17 @@ class DynamicSequence extends Sequence
      * @param T $start start of the sequence
      * @param int<0, max>|null $size size of the sequence (infinite if null)
      * @param callable(T $previousValue): T $nextValueGetter getter for the next value
-     * @param (callable(int $index, T $start): T)|null $indexValueGetter getter for the i-th value
+     * @param (callable(int $index, T $start): T)|null $indexedValueGetter getter for the i-th value
      */
     public function __construct(
         $start,
         ?int $size,
         callable $nextValueGetter,
-        ?callable $indexValueGetter = null
+        ?callable $indexedValueGetter = null
     ) {
         parent::__construct($start, $size);
         $this->nextValueGetter = $nextValueGetter;
-        $this->indexValueGetter = $indexValueGetter;
+        $this->indexValueGetter = $indexedValueGetter;
     }
 
     /**

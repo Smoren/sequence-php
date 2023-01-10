@@ -87,7 +87,7 @@ class FunctionsTest extends Unit
     {
         // Given
         // When
-        $mapped = map($data, $mapper);
+        $mapped = map($mapper, ...$data);
 
         // Then
         $this->assertEquals($expected, $mapped->toArray());
@@ -108,9 +108,20 @@ class FunctionsTest extends Unit
             ],
             [
                 [
-                    ['name' => 'John'],
-                    ['name' => 'Jane'],
-                    ['name' => 'Jim'],
+                    [],
+                ],
+                static function(array $item) {
+                    return $item['name'];
+                },
+                [],
+            ],
+            [
+                [
+                    [
+                        ['name' => 'John'],
+                        ['name' => 'Jane'],
+                        ['name' => 'Jim'],
+                    ],
                 ],
                 static function(array $item) {
                     return $item['name'];
@@ -118,25 +129,87 @@ class FunctionsTest extends Unit
                 ['John', 'Jane', 'Jim'],
             ],
             [
-                [1, 2, 3],
+                [
+                    [1, 2, 3],
+                ],
                 static function($item) {
                     return $item + 1;
                 },
                 [2, 3, 4],
             ],
             [
-                [1, 2, 3],
+                [
+                    [1, 2, 3],
+                ],
                 static function($item) {
                     return $item;
                 },
                 [1, 2, 3],
             ],
             [
-                [1, 2, 3],
+                [
+                    [1, 2, 3],
+                ],
                 static function() {
                     return null;
                 },
                 [null, null, null],
+            ],
+            [
+                [
+                    [
+                        11,
+                        22,
+                        33,
+                    ],
+                    [
+                        ['name' => 'John'],
+                        ['name' => 'Jane'],
+                        ['name' => 'Jim'],
+                    ],
+                ],
+                static function(int $id, array $data) {
+                    return [$id => $data['name']];
+                },
+                [[11 => 'John'], [22 => 'Jane'], [33 => 'Jim']],
+            ],
+            [
+                [
+                    [
+                        11,
+                        22,
+                        33,
+                        44,
+                    ],
+                    [
+                        ['name' => 'John'],
+                        ['name' => 'Jane'],
+                        ['name' => 'Jim'],
+                    ],
+                ],
+                static function(int $id, array $data) {
+                    return [$id => $data['name']];
+                },
+                [[11 => 'John'], [22 => 'Jane'], [33 => 'Jim']],
+            ],
+            [
+                [
+                    [
+                        11,
+                        22,
+                        33,
+                    ],
+                    [
+                        ['name' => 'John'],
+                        ['name' => 'Jane'],
+                        ['name' => 'Jim'],
+                        ['name' => 'Mary'],
+                    ],
+                ],
+                static function(int $id, array $data) {
+                    return [$id => $data['name']];
+                },
+                [[11 => 'John'], [22 => 'Jane'], [33 => 'Jim']],
             ],
         ];
     }

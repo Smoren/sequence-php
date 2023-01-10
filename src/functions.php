@@ -2,6 +2,9 @@
 
 namespace Smoren\Sequence\Functions;
 
+use ArrayIterator;
+use IteratorIterator;
+use MultipleIterator;
 use Smoren\Sequence\Structs\IndexedArray;
 use Smoren\Sequence\Structs\Range;
 
@@ -24,22 +27,36 @@ function xrange(int $start, ?int $size = null, int $step = 1): Range
 }
 
 /**
- * Maps iterable collection and returns IndexedArray of mapped values.
+ * Maps iterable collections and returns IndexedArray of mapped values.
  *
  * @template TInput
  * @template TOutput
  *
- * @param iterable<TInput> $collection
  * @param callable(TInput $item): TOutput $mapper
+ * @param iterable<TInput> $collections
  *
  * @return IndexedArray<TOutput>
  */
-function map(iterable $collection, callable $mapper): IndexedArray
+function map(callable $mapper, iterable ...$collections): IndexedArray
 {
     $result = new IndexedArray();
 
-    foreach($collection as $item) {
-        $result[] = $mapper($item);
+    if(count($collections) === 0) {
+        return $result;
+    }
+
+    $it = new MultipleIterator(MultipleIterator::MIT_NEED_ALL|MultipleIterator::MIT_KEYS_NUMERIC);
+
+    foreach($collections as $collection) {
+        if(is_array($collection)) {
+            $collection = new ArrayIterator($collection);
+        }
+
+        $it->attachIterator(new IteratorIterator($collection));
+    }
+
+    foreach($it as $values) {
+        $result[] = $mapper(...$values);
     }
 
     return $result;

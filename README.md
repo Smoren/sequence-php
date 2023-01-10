@@ -6,25 +6,47 @@
 ![Build and test](https://github.com/Smoren/sequence-php/actions/workflows/test_master.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Python-like sequences with iterators for PHP
+Python-like sequences with iterators for PHP.
 
-### How to install to your project
+## How to install to your project
 ```
 composer require smoren/sequence
 ```
 
-### Unit testing
-```
-composer install
-composer test-init
-composer test
-```
+## Quick Reference
 
-### Usage
+### Loops
+| Functionality                         | Description                  | Code Snippet                                      |
+|---------------------------------------|------------------------------|---------------------------------------------------|
+| [`Range-based for`](#Range-based-for) | Python-like range-based loop | `foreach(xrange($start, $size, $step) as $value)` |
 
-#### Range-based for (python-like)
+### Sequences
+| Class                                  | Description                     | Code Snippet                                                                |
+|----------------------------------------|---------------------------------|-----------------------------------------------------------------------------|
+| [`Range`](#Range)                      | Iterable arithmetic progression | `new Range($start, $size, $step)`                                           |
+| [`Exponential`](#Exponential)          | Iterable geometric progression  | `new Exponential($start, $size, $step)`                                     |
+| [`DynamicSequence`](#Dynamic-Sequence) | Callback-configurable sequence  | `new DynamicSequence($start, $size, $nextValueGetter, $indexedValueGetter)` |
 
-Unlike the built-in function `range()`, `xrange()` does not create an array, but a `Traversable` object 
+### Data containers
+| Class                            | Description              | Code Snippet               |
+|----------------------------------|--------------------------|----------------------------|
+| [`IndexedArray`](#Indexed-Array) | Python-like indexed list | `new IndexedArray($array)` |
+
+### Functions
+| Function            | Description                                                              | Code Snippet                                   |
+|---------------------|--------------------------------------------------------------------------|------------------------------------------------|
+| [`xrange`](#xrange) | Creates iterable range                                                   | `xrange($start, $size, $step)`                 |
+| [`map`](#map)       | Maps iterable collections and returns IndexedArray of mapped values      | `map($mapper, ...$collections)`                |
+| [`filter`](#filter) | Filters iterable collection and returning IndexedArray of filtered items | `filter($collection, $filter)`                 |
+| [`reduce`](#reduce) | Reduces an iterable collection                                           | `reduce($collection, $reducer, $initialValue)` |
+
+## Usage
+
+### Loops
+
+#### Range-based for
+
+Unlike the PHP built-in function `range()`, `xrange()` does not create an array, but a `Traversable` object 
 that takes up a small amount of memory, regardless of the number of elements in the sequence.
 
 ```php
@@ -46,7 +68,15 @@ foreach(xrange(1, 5, 2) as $i) { // start: 1; count: 5; step: 2
 // 1 3 5 7 9
 ```
 
+### Sequences
+
 #### Range
+
+Iterable arithmetic progression.
+
+```new Range(int|float $start, ?int $size, int|float $step)```
+
+For infinite sequence use `$size = null`.
 
 ```php
 use Smoren\Sequence\Structs\Range;
@@ -103,6 +133,12 @@ foreach($range as $value) {
 
 #### Exponential
 
+Iterable geometric progression.
+
+```new Exponential(int|float $start, ?int $size, int|float $step)```
+
+For infinite sequence use `$size = null`.
+
 ```php
 use Smoren\Sequence\Structs\Exponential;
 use Smoren\Sequence\Exceptions\OutOfRangeException;
@@ -158,7 +194,13 @@ foreach($sequence as $value) {
 // 0.5 0.25 0.125...
 ```
 
-#### DynamicSequence
+#### Dynamic Sequence
+
+Implementation of sequence configured with callables.
+
+```new DynamicSequence(mixed $start, ?int $size, callable $nextValueGetter, ?callable $indexedValueGetter = null)```
+
+For infinite sequence use `$size = null`.
 
 ```php
 use Smoren\Sequence\Structs\DynamicSequence;
@@ -174,7 +216,17 @@ var_dump(iterator_to_array($sequence));
 // [1, 2, 3, 4, 5]
 ```
 
-#### IndexedArray
+### Data containers
+
+#### Indexed Array
+
+Python-like indexed list.
+
+Its keys are always an unbroken sequence of natural numbers starting from zero.
+
+It is also allowed to access array elements from the end with negative indices.
+
+OutOfRangeException will be thrown when trying to access a non-existent index.
 
 ```php
 use Smoren\Sequence\Structs\IndexedArray;
@@ -213,9 +265,13 @@ try {
 }
 ```
 
+### Functions
+
 #### xrange
 
-Function for creating iterable range.
+Creates iterable range.
+
+Works like `xrange()` function in python2 or `range()` function in python3.
 
 ```xrange(int $start, ?int $size = null, int $step = 1): Range```
 
@@ -237,24 +293,25 @@ print_r(iterator_to_array($range));
 
 #### map
 
-Function for mapping iterable collection and creating IndexedArray of mapped values as a result.
+Maps iterable collection and creating IndexedArray of mapped values as a result.
 
 ```map(iterable $collection, callable $mapper): IndexedArray```
 
 ```php
 use function Smoren\Sequence\Functions\map;
 
-$input = [1, 2, 3, 4, 5];
-$result = map($input, static function($item) {
-    return $item + 2;
-});
+$ids = [1, 2, 3];
+$names = ['Mary', 'Jane', 'Alice'];
+$result = map(static function(int $id, string $name) {
+    return "{$id}. {$name}";
+}, $ids, $names);
 print_r($result->toArray());
-// [3, 4, 5, 6, 7]
+// ['1. Mary', '2. Jane', '3. Alice']
 ```
 
 #### filter
 
-Function for filtering iterable collection and returning IndexedArray of filtered items.
+Filters iterable collection and returning IndexedArray of filtered items.
 
 ```filter(iterable $collection, callable $filter): IndexedArray```
 
@@ -271,9 +328,9 @@ print_r($result->toArray());
 
 #### reduce
 
-Function for reduction of iterable collection.
+Reduces an iterable collection.
 
-```reduce(iterable $collection, callable $reducer, mixed $initialValue = null): IndexedArray```
+```reduce(iterable $collection, callable $reducer, mixed $initialValue = null): mixed```
 
 ```php
 use function Smoren\Sequence\Functions\reduce;
@@ -285,3 +342,14 @@ $result = reduce($input, static function($carry, $item) {
 var_dump($result);
 // 15
 ```
+
+## Unit testing
+```
+composer install
+composer test-init
+composer test
+```
+
+## License
+
+PHP Sequence is licensed under the MIT License.
