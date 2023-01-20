@@ -295,7 +295,7 @@ print_r(iterator_to_array($range));
 
 Maps iterable collection and creating IndexedArray of mapped values as a result.
 
-```map(iterable $collection, callable $mapper): IndexedArray```
+```map(callable $mapper, iterable ...$collections): IndexedArray```
 
 ```php
 use function Smoren\Sequence\Functions\map;
