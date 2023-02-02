@@ -350,6 +350,15 @@ composer test-init
 composer test
 ```
 
+## Standards
+
+PHP Sequence conforms to the following standards:
+
+* PSR-1 — [Basic coding standard](https://www.php-fig.org/psr/psr-1/)
+* PSR-4 — [Autoloader](https://www.php-fig.org/psr/psr-4/)
+* PSR-12 — [Extended coding style guide](https://www.php-fig.org/psr/psr-12/)
+
+
 ## License
 
 PHP Sequence is licensed under the MIT License.

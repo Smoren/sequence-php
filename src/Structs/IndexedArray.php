@@ -69,11 +69,11 @@ class IndexedArray implements IndexedArrayInterface
      */
     public function offsetSet($offset, $value): void
     {
-        if($offset === null) {
+        if ($offset === null) {
             $this->source[] = $value;
         } else {
             $range = $this->getRange();
-            if(isset($range[$offset])) {
+            if (isset($range[$offset])) {
                 $index = $range[$offset];
                 $this->source[$index] = $value;
             } else {
@@ -88,7 +88,7 @@ class IndexedArray implements IndexedArrayInterface
     public function offsetUnset($offset): void
     {
         $range = $this->getRange();
-        if(isset($range[$offset])) {
+        if (isset($range[$offset])) {
             $index = $range[$offset];
             unset($this->source[$index]);
             $this->source = array_values($this->source);

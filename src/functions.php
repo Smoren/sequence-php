@@ -19,7 +19,7 @@ use Smoren\Sequence\Structs\Range;
  */
 function xrange(int $start, ?int $size = null, int $step = 1): Range
 {
-    if($size === null) {
+    if ($size === null) {
         [$start, $size] = [0, $start];
     }
 
@@ -41,21 +41,21 @@ function map(callable $mapper, iterable ...$collections): IndexedArray
 {
     $result = new IndexedArray();
 
-    if(count($collections) === 0) {
+    if (count($collections) === 0) {
         return $result;
     }
 
-    $it = new MultipleIterator(MultipleIterator::MIT_NEED_ALL|MultipleIterator::MIT_KEYS_NUMERIC);
+    $it = new MultipleIterator(MultipleIterator::MIT_NEED_ALL | MultipleIterator::MIT_KEYS_NUMERIC);
 
-    foreach($collections as $collection) {
-        if(is_array($collection)) {
+    foreach ($collections as $collection) {
+        if (is_array($collection)) {
             $collection = new ArrayIterator($collection);
         }
 
         $it->attachIterator(new IteratorIterator($collection));
     }
 
-    foreach($it as $values) {
+    foreach ($it as $values) {
         $result[] = $mapper(...$values);
     }
 
@@ -76,8 +76,8 @@ function filter(iterable $collection, callable $filter): IndexedArray
 {
     $result = new IndexedArray();
 
-    foreach($collection as $item) {
-        if($filter($item)) {
+    foreach ($collection as $item) {
+        if ($filter($item)) {
             $result[] = $item;
         }
     }
@@ -101,7 +101,7 @@ function reduce(iterable $collection, callable $reducer, $initialValue = null)
 {
     $carry = $initialValue;
 
-    foreach($collection as $item) {
+    foreach ($collection as $item) {
         $carry = $reducer($carry, $item);
     }
 

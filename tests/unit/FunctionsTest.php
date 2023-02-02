@@ -47,7 +47,7 @@ class FunctionsTest extends Unit
             ],
             [
                 [2, 10],
-                range(2, 11)   ,
+                range(2, 11),
             ],
             [
                 [2, 3, 3],
@@ -101,7 +101,7 @@ class FunctionsTest extends Unit
         return [
             [
                 [],
-                static function(array $item) {
+                static function (array $item) {
                     return $item['name'];
                 },
                 [],
@@ -110,7 +110,7 @@ class FunctionsTest extends Unit
                 [
                     [],
                 ],
-                static function(array $item) {
+                static function (array $item) {
                     return $item['name'];
                 },
                 [],
@@ -123,7 +123,7 @@ class FunctionsTest extends Unit
                         ['name' => 'Jim'],
                     ],
                 ],
-                static function(array $item) {
+                static function (array $item) {
                     return $item['name'];
                 },
                 ['John', 'Jane', 'Jim'],
@@ -132,7 +132,7 @@ class FunctionsTest extends Unit
                 [
                     [1, 2, 3],
                 ],
-                static function($item) {
+                static function ($item) {
                     return $item + 1;
                 },
                 [2, 3, 4],
@@ -141,7 +141,7 @@ class FunctionsTest extends Unit
                 [
                     [1, 2, 3],
                 ],
-                static function($item) {
+                static function ($item) {
                     return $item;
                 },
                 [1, 2, 3],
@@ -150,7 +150,7 @@ class FunctionsTest extends Unit
                 [
                     [1, 2, 3],
                 ],
-                static function() {
+                static function () {
                     return null;
                 },
                 [null, null, null],
@@ -168,7 +168,7 @@ class FunctionsTest extends Unit
                         ['name' => 'Jim'],
                     ],
                 ],
-                static function(int $id, array $data) {
+                static function (int $id, array $data) {
                     return [$id => $data['name']];
                 },
                 [[11 => 'John'], [22 => 'Jane'], [33 => 'Jim']],
@@ -187,7 +187,7 @@ class FunctionsTest extends Unit
                         ['name' => 'Jim'],
                     ],
                 ],
-                static function(int $id, array $data) {
+                static function (int $id, array $data) {
                     return [$id => $data['name']];
                 },
                 [[11 => 'John'], [22 => 'Jane'], [33 => 'Jim']],
@@ -206,7 +206,7 @@ class FunctionsTest extends Unit
                         ['name' => 'Mary'],
                     ],
                 ],
-                static function(int $id, array $data) {
+                static function (int $id, array $data) {
                     return [$id => $data['name']];
                 },
                 [[11 => 'John'], [22 => 'Jane'], [33 => 'Jim']],
@@ -239,7 +239,7 @@ class FunctionsTest extends Unit
         return [
             [
                 [],
-                static function(array $item) {
+                static function (array $item) {
                     return $item['value'] > 5;
                 },
                 [],
@@ -250,7 +250,7 @@ class FunctionsTest extends Unit
                     ['value' => 10],
                     ['value' => 20],
                 ],
-                static function(array $item) {
+                static function (array $item) {
                     return $item['value'] > 5;
                 },
                 [
@@ -260,28 +260,28 @@ class FunctionsTest extends Unit
             ],
             [
                 [1, 2, 3],
-                static function($item) {
+                static function ($item) {
                     return $item > 1;
                 },
                 [2, 3],
             ],
             [
                 [1, 2, 3],
-                static function($item) {
+                static function ($item) {
                     return $item > 0;
                 },
                 [1, 2, 3],
             ],
             [
                 [1, 2, 3],
-                static function($item) {
+                static function ($item) {
                     return true;
                 },
                 [1, 2, 3],
             ],
             [
                 [1, 2, 3],
-                static function() {
+                static function () {
                     return false;
                 },
                 [],
@@ -315,7 +315,7 @@ class FunctionsTest extends Unit
         return [
             [
                 [],
-                static function($carry, $item) {
+                static function ($carry, $item) {
                     return $carry + $item;
                 },
                 null,
@@ -323,7 +323,7 @@ class FunctionsTest extends Unit
             ],
             [
                 [],
-                static function($carry, $item) {
+                static function ($carry, $item) {
                     return $carry + $item;
                 },
                 10,
@@ -331,7 +331,7 @@ class FunctionsTest extends Unit
             ],
             [
                 [1, 2, 3],
-                static function($carry, $item) {
+                static function ($carry, $item) {
                     return $carry + $item;
                 },
                 0,
@@ -339,7 +339,7 @@ class FunctionsTest extends Unit
             ],
             [
                 [1, 2, 3],
-                static function($carry, $item) {
+                static function ($carry, $item) {
                     return $carry + $item;
                 },
                 10,
@@ -347,7 +347,7 @@ class FunctionsTest extends Unit
             ],
             [
                 [1, 2, 3],
-                static function($carry, $item) {
+                static function ($carry, $item) {
                     return $item;
                 },
                 10,
@@ -355,7 +355,7 @@ class FunctionsTest extends Unit
             ],
             [
                 [1, 2, 3],
-                static function($carry, $item) {
+                static function ($carry, $item) {
                     return 0;
                 },
                 10,

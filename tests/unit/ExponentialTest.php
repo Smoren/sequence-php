@@ -34,7 +34,7 @@ class ExponentialTest extends Unit
 
         // iterating and accessing by indexes checks
         $iterationsCount = 0;
-        foreach($range as $index => $value) {
+        foreach ($range as $index => $value) {
             $this->assertEqualsWithDelta($expected[$index], $value, self::PRECISION);
             $this->assertEqualsWithDelta($expected[$index], $range[$index], self::PRECISION);
 
@@ -48,11 +48,11 @@ class ExponentialTest extends Unit
         $this->assertEquals(count($expected), $iterationsCount);
 
         // readonly checks
-        foreach($range as $index => $value) {
+        foreach ($range as $index => $value) {
             try {
                 $range[$index] = -1000;
                 $this->fail();
-            } catch(ReadOnlyException $e) {
+            } catch (ReadOnlyException $e) {
                 $this->assertEqualsWithDelta($value, $range[$index], self::PRECISION);
             }
         }
@@ -64,27 +64,27 @@ class ExponentialTest extends Unit
     public function dataProviderForEqualNonInfinite(): array
     {
         return [
-            [   [0, 0, 0],                  []                  ],
-            [   [0, 0, 1],                  []                  ],
-            [   [1, 0, 1],                  []                  ],
-            [   [0, 1, 1],                  [0]                 ],
-            [   [0, 1, 0],                  [0]                 ],
-            [   [0, 1, 2],                  [0]                 ],
-            [   [1, 1, 2],                  [1]                 ],
-            [   [0, 3, 1],                  [0, 0, 0]           ],
-            [   [0, 3, 0],                  [0, 0, 0]           ],
-            [   [2, 3, 0],                  [2, 0, 0]           ],
-            [   [1, 3, 1],                  [1, 1, 1]           ],
-            [   [1, 3, 2],                  [1, 2, 4]           ],
-            [   [2, 3, 2],                  [2, 4, 8]           ],
-            [   [-2, 3, 2],                 [-2, -4, -8]        ],
-            [   [2, 5, 2],                  [2, 4, 8, 16, 32]   ],
-            [   [1, 5, -1],                 [1, -1, 1, -1, 1]   ],
-            [   [-1, 5, -1],                [-1, 1, -1, 1, -1]  ],
-            [   [1, 5, -2],                 [1, -2, 4, -8, 16]  ],
-            [   [1, 3, 0.5],                [1, 0.5, 0.25]      ],
-            [   [1, 3, -0.5],               [1, -0.5, 0.25]     ],
-            [   [-1, 3, -0.5],              [-1, 0.5, -0.25]    ],
+            [[0, 0, 0], []],
+            [[0, 0, 1], []],
+            [[1, 0, 1], []],
+            [[0, 1, 1], [0]],
+            [[0, 1, 0], [0]],
+            [[0, 1, 2], [0]],
+            [[1, 1, 2], [1]],
+            [[0, 3, 1], [0, 0, 0]],
+            [[0, 3, 0], [0, 0, 0]],
+            [[2, 3, 0], [2, 0, 0]],
+            [[1, 3, 1], [1, 1, 1]],
+            [[1, 3, 2], [1, 2, 4]],
+            [[2, 3, 2], [2, 4, 8]],
+            [[-2, 3, 2], [-2, -4, -8]],
+            [[2, 5, 2], [2, 4, 8, 16, 32]],
+            [[1, 5, -1], [1, -1, 1, -1, 1]],
+            [[-1, 5, -1], [-1, 1, -1, 1, -1]],
+            [[1, 5, -2], [1, -2, 4, -8, 16]],
+            [[1, 3, 0.5], [1, 0.5, 0.25]],
+            [[1, 3, -0.5], [1, -0.5, 0.25]],
+            [[-1, 3, -0.5], [-1, 0.5, -0.25]],
         ];
     }
 
@@ -100,11 +100,11 @@ class ExponentialTest extends Unit
         $range = new Exponential(...$config);
 
         // When
-        foreach($indexes as $index) {
+        foreach ($indexes as $index) {
             try {
                 $range[$index];
                 $this->fail();
-            } catch(OutOfRangeException $e) {
+            } catch (OutOfRangeException $e) {
                 // Then
             }
         }
@@ -116,22 +116,22 @@ class ExponentialTest extends Unit
     public function dataProviderForOutOfRangeNonInfinite(): array
     {
         return [
-            [   [0, 0, 0],                  [0, 1, -1, -2]                  ],
-            [   [0, 0, 1],                  [0, 1, -1, -2]                  ],
-            [   [1, 0, 1],                  [0, 1, -1, -2]                  ],
-            [   [0, 1, 1],                  [1, 2, -2, -3]                  ],
-            [   [0, 1, 0],                  [1, 2, -2, -3]                  ],
-            [   [0, 1, 2],                  [1, 2, -2, -3]                  ],
-            [   [1, 1, 2],                  [1, 2, -2, -3]                  ],
-            [   [0, 3, 1],                  [3, 4, -4, -5]                  ],
-            [   [1, 3, 1],                  [3, 4, -4, -5]                  ],
-            [   [1, 3, 0],                  [3, 4, -4, -5]                  ],
-            [   [0, 5, 2],                  [5, 6, -6, -7]                  ],
-            [   [0, 3, -1],                 [3, 4, -4, -5]                  ],
-            [   [-1, 3, -1],                [3, 4, -4, -5]                  ],
-            [   [5.5, 3, 1.1],              [3, 4, -4, -5]                  ],
-            [   [0, 100, 0],                [100, -101]                     ],
-            [   [0, 100, 0],                [null, 'test', '', 10.5, '10']  ],
+            [[0, 0, 0], [0, 1, -1, -2]],
+            [[0, 0, 1], [0, 1, -1, -2]],
+            [[1, 0, 1], [0, 1, -1, -2]],
+            [[0, 1, 1], [1, 2, -2, -3]],
+            [[0, 1, 0], [1, 2, -2, -3]],
+            [[0, 1, 2], [1, 2, -2, -3]],
+            [[1, 1, 2], [1, 2, -2, -3]],
+            [[0, 3, 1], [3, 4, -4, -5]],
+            [[1, 3, 1], [3, 4, -4, -5]],
+            [[1, 3, 0], [3, 4, -4, -5]],
+            [[0, 5, 2], [5, 6, -6, -7]],
+            [[0, 3, -1], [3, 4, -4, -5]],
+            [[-1, 3, -1], [3, 4, -4, -5]],
+            [[5.5, 3, 1.1], [3, 4, -4, -5]],
+            [[0, 100, 0], [100, -101]],
+            [[0, 100, 0], [null, 'test', '', 10.5, '10']],
         ];
     }
 
@@ -150,15 +150,15 @@ class ExponentialTest extends Unit
         $range = new Exponential(...$config);
 
         // When
-        foreach($range as $value) {
+        foreach ($range as $value) {
             $resultDirect[] = $value;
 
-            if(count($resultDirect) === count($expectedDirect)) {
+            if (count($resultDirect) === count($expectedDirect)) {
                 break;
             }
         }
-        for($i=0; $i<count($expectedReverse); ++$i) {
-            $resultReverse[] = $range[-$i-1];
+        for ($i = 0; $i < count($expectedReverse); ++$i) {
+            $resultReverse[] = $range[-$i - 1];
         }
 
         // Then
@@ -214,10 +214,10 @@ class ExponentialTest extends Unit
         $range = new Exponential(...$config);
 
         // When
-        foreach($range as $value) {
+        foreach ($range as $value) {
             $result[] = $value;
 
-            if($range->isInfinite() && count($result) === count($expected)) {
+            if ($range->isInfinite() && count($result) === count($expected)) {
                 break;
             }
         }
@@ -225,21 +225,21 @@ class ExponentialTest extends Unit
         try {
             $range[-1];
             $this->fail();
-        } catch(\DivisionByZeroError $e) {
+        } catch (\DivisionByZeroError $e) {
             // Then
         }
 
         try {
             $range[-2];
             $this->fail();
-        } catch(\DivisionByZeroError $e) {
+        } catch (\DivisionByZeroError $e) {
             // Then
         }
 
         try {
             $range[-100];
             $this->fail();
-        } catch(\DivisionByZeroError $e) {
+        } catch (\DivisionByZeroError $e) {
             // Then
         }
 
@@ -304,13 +304,13 @@ class ExponentialTest extends Unit
         try {
             $range[0] = 1;
             $this->fail();
-        } catch(ReadOnlyException $e) {
+        } catch (ReadOnlyException $e) {
         }
 
         try {
             unset($range[0]);
             $this->fail();
-        } catch(ReadOnlyException $e) {
+        } catch (ReadOnlyException $e) {
         }
 
         $this->assertEquals([1, 2, 4], iterator_to_array($range));
@@ -327,7 +327,7 @@ class ExponentialTest extends Unit
         try {
             $range[$offset];
             $this->fail();
-        } catch(OutOfRangeException $e) {
+        } catch (OutOfRangeException $e) {
         }
     }
 }

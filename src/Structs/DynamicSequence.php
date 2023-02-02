@@ -54,11 +54,11 @@ class DynamicSequence extends Sequence
      */
     public function getValueByIndex(int $index)
     {
-        if(is_callable($this->indexValueGetter)) {
+        if (is_callable($this->indexValueGetter)) {
             return ($this->indexValueGetter)($index, $this->start);
         }
 
-        return reduce(xrange($index), function($carry) {
+        return reduce(xrange($index), function ($carry) {
             return $this->getNextValue($carry);
         }, $this->start);
     }

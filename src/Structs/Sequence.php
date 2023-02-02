@@ -42,12 +42,12 @@ abstract class Sequence implements SequenceInterface
      */
     public function offsetExists($offset): bool
     {
-        if(!is_int($offset)) {
+        if (!is_int($offset)) {
             return false;
         }
 
-        if(!$this->isInfinite()) {
-            if($offset >= 0) {
+        if (!$this->isInfinite()) {
+            if ($offset >= 0) {
                 return $offset < count($this);
             }
             return abs($offset) <= count($this);
@@ -101,17 +101,17 @@ abstract class Sequence implements SequenceInterface
      */
     public function offsetGet($offset)
     {
-        if(!$this->offsetExists($offset)) {
+        if (!$this->offsetExists($offset)) {
             throw new OutOfRangeException();
         }
 
         /** @var int $offset */
 
-        if($this->isInfinite()) {
+        if ($this->isInfinite()) {
             return $this->getValueByIndex($offset);
         }
 
-        if($offset < 0) {
+        if ($offset < 0) {
             $offset = $this->size + ($offset % $this->size);
         }
 

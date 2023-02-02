@@ -39,7 +39,7 @@ class DynamicSequenceTest extends Unit
 
         // iterating and accessing by indexes checks
         $iterationsCount = 0;
-        foreach($sequence as $index => $value) {
+        foreach ($sequence as $index => $value) {
             $this->assertEqualsWithDelta($expected[$index], $value, self::PRECISION);
             $this->assertEqualsWithDelta($expected[$index], $sequence[$index], self::PRECISION);
 
@@ -53,11 +53,11 @@ class DynamicSequenceTest extends Unit
         $this->assertEquals(count($expected), $iterationsCount);
 
         // readonly checks
-        foreach($sequence as $index => $value) {
+        foreach ($sequence as $index => $value) {
             try {
                 $sequence[$index] = -1000;
                 $this->fail();
-            } catch(ReadOnlyException $e) {
+            } catch (ReadOnlyException $e) {
                 $this->assertEqualsWithDelta($value, $sequence[$index], self::PRECISION);
             }
         }
@@ -71,17 +71,17 @@ class DynamicSequenceTest extends Unit
         return [
             [
                 [0, 5],
-                static function($previousValue) {
+                static function ($previousValue) {
                     return $previousValue;
                 },
-                static function() {
+                static function () {
                     return 0;
                 },
                 [0, 0, 0, 0, 0]
             ],
             [
                 [0, 5],
-                static function($previousValue) {
+                static function ($previousValue) {
                     return $previousValue;
                 },
                 null,
@@ -89,17 +89,17 @@ class DynamicSequenceTest extends Unit
             ],
             [
                 [0, 5],
-                static function($previousValue) {
+                static function ($previousValue) {
                     return $previousValue + 1;
                 },
-                static function($index, $start) {
+                static function ($index, $start) {
                     return $start + $index;
                 },
                 [0, 1, 2, 3, 4]
             ],
             [
                 [0, 5],
-                static function($previousValue) {
+                static function ($previousValue) {
                     return $previousValue + 1;
                 },
                 null,
@@ -107,17 +107,17 @@ class DynamicSequenceTest extends Unit
             ],
             [
                 [1, 5],
-                static function($previousValue) {
+                static function ($previousValue) {
                     return $previousValue + 1;
                 },
-                static function($index, $start) {
+                static function ($index, $start) {
                     return $start + $index;
                 },
                 [1, 2, 3, 4, 5]
             ],
             [
                 [1, 5],
-                static function($previousValue) {
+                static function ($previousValue) {
                     return $previousValue + 1;
                 },
                 null,
@@ -141,23 +141,22 @@ class DynamicSequenceTest extends Unit
         ?callable $indexValueGetter,
         array $expectedDirect,
         array $expectedReverse
-    ): void
-    {
+    ): void {
         // Given
         $resultDirect = [];
         $resultReverse = [];
         $range = new DynamicSequence(...[...$config, $nextValueGetter, $indexValueGetter]);
 
         // When
-        foreach($range as $value) {
+        foreach ($range as $value) {
             $resultDirect[] = $value;
 
-            if(count($resultDirect) === count($expectedDirect)) {
+            if (count($resultDirect) === count($expectedDirect)) {
                 break;
             }
         }
-        for($i=0; $i<count($expectedReverse); ++$i) {
-            $resultReverse[] = $range[-$i-1];
+        for ($i = 0; $i < count($expectedReverse); ++$i) {
+            $resultReverse[] = $range[-$i - 1];
         }
 
         // Then
@@ -174,10 +173,10 @@ class DynamicSequenceTest extends Unit
         return [
             [
                 [22, null],
-                static function($previousValue) {
+                static function ($previousValue) {
                     return $previousValue;
                 },
-                static function($index, $startValue) {
+                static function ($index, $startValue) {
                     return $startValue;
                 },
                 array_fill(0, 100, 22),
@@ -185,10 +184,10 @@ class DynamicSequenceTest extends Unit
             ],
             [
                 [0, null],
-                static function($previousValue) {
+                static function ($previousValue) {
                     return $previousValue + 1;
                 },
-                static function($index, $startValue) {
+                static function ($index, $startValue) {
                     return $startValue + $index;
                 },
                 range(0, 99, 1),

@@ -60,7 +60,7 @@ class IndexedArrayTest extends Unit
         try {
             unset($array[1]);
             $this->fail();
-        } catch(OutOfRangeException $e) {
+        } catch (OutOfRangeException $e) {
         }
 
         unset($array[0]);
@@ -70,7 +70,7 @@ class IndexedArrayTest extends Unit
         try {
             unset($array[0]);
             $this->fail();
-        } catch(OutOfRangeException $e) {
+        } catch (OutOfRangeException $e) {
         }
 
         $array[] = 1;
@@ -110,13 +110,13 @@ class IndexedArrayTest extends Unit
         try {
             $array[3] = 100;
             $this->fail();
-        } catch(OutOfRangeException $e) {
+        } catch (OutOfRangeException $e) {
         }
 
         try {
             $array[-4] = 100;
             $this->fail();
-        } catch(OutOfRangeException $e) {
+        } catch (OutOfRangeException $e) {
         }
 
         $this->assertCount(3, $array);
@@ -133,7 +133,7 @@ class IndexedArrayTest extends Unit
         try {
             $array[$offset];
             $this->fail();
-        } catch(OutOfRangeException $e) {
+        } catch (OutOfRangeException $e) {
         }
     }
 }
