@@ -6,6 +6,8 @@
 ![Build and test](https://github.com/Smoren/sequence-php/actions/workflows/test_master.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+![MathPHP Logo](docs/images/sequence-php-logo.png)
+
 Python-like sequences with iterators for PHP.
 
 ## How to install to your project
