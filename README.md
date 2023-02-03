@@ -1,4 +1,4 @@
-# Iterator-based sequences
+# PHP Iterator-based sequences
 
 ![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/smoren/sequence)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Smoren/sequence-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Smoren/sequence-php/?branch=master)
