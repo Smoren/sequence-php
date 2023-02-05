@@ -23,13 +23,8 @@ class PipeTest extends Unit
      */
     public function testPipe($input, array $funcs, $expected): void
     {
-        // Given
-        $pipe = new Pipe();
-
         // When
-        foreach ($funcs as $func) {
-            $pipe[] = $func;
-        }
+        $pipe = new Pipe($funcs);
 
         // Then
         $this->assertEquals($expected, $pipe($input));
@@ -38,6 +33,18 @@ class PipeTest extends Unit
     public function dataProviderForPipe(): array
     {
         return [
+            [
+                1,
+                [],
+                1,
+            ],
+            [
+                1,
+                [
+                    fn ($x) => $x + 1,
+                ],
+                2,
+            ],
             [
                 1,
                 [
