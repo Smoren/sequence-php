@@ -68,7 +68,7 @@ function map(callable $mapper, iterable ...$collections): IndexedArray
  * @template T
  *
  * @param iterable<T> $collection
- * @param callable(T $item): T $filter
+ * @param callable(T $item): bool $filter
  *
  * @return IndexedArray<T>
  */
