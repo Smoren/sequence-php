@@ -50,7 +50,7 @@ class DynamicSequenceTest extends Unit
             ++$iterationsCount;
         }
 
-        $this->assertEquals(count($expected), $iterationsCount);
+        $this->assertCount($iterationsCount, $expected);
 
         // readonly checks
         foreach ($sequence as $index => $value) {
