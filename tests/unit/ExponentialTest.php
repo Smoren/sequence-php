@@ -45,7 +45,7 @@ class ExponentialTest extends Unit
             ++$iterationsCount;
         }
 
-        $this->assertEquals(count($expected), $iterationsCount);
+        $this->assertCount($iterationsCount, $expected);
 
         // readonly checks
         foreach ($range as $index => $value) {
